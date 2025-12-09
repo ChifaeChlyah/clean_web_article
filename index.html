@@ -13,7 +13,11 @@
 <script>
 function extract() {
     const url = document.getElementById('url').value;
-    fetch(`https://clean-web-article.onrender.com/extract?url=${encodeURIComponent(url)}`)
+    fetch(`https://clean-web-article.onrender.com/extract?url=${encodeURIComponent(url)}`, {
+    headers: {
+        "X-API-Key": "demo-key-123"
+    }
+})
     .then(res => res.json())
     .then(data => {
         document.getElementById('result').textContent = JSON.stringify(data, null, 2);
