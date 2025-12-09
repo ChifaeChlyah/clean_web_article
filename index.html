@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Clean Web Article API</title>
+</head>
+<body>
+<h1>Clean Web Article API — Démo</h1>
+<input type="text" id="url" placeholder="Entrez une URL" size="50">
+<button onclick="extract()">Extraire</button>
+<pre id="result"></pre>
+
+<script>
+function extract() {
+    const url = document.getElementById('url').value;
+    fetch(`https://clean-web-article.onrender.com/extract?url=${encodeURIComponent(url)}`)
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    })
+    .catch(err => document.getElementById('result').textContent = err);
+}
+</script>
+</body>
+</html>
