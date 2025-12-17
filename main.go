@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -78,6 +79,7 @@ func cleanForLLM(raw string) string {
 	if len(words) > 1500 {
 		text = strings.Join(words[:1500], " ") + "..."
 	}
+	text = regexp.MustCompile(`\n{3,}`).ReplaceAllString(text, "\n\n")
 
 	return text
 }
