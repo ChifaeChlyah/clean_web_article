@@ -111,7 +111,16 @@ func extractHandler(c *gin.Context) {
 	}
 
 	title := doc.Find("title").First().Text()
-	rawText := doc.Find("p").Text()
+	var paragraphs []string
+
+	doc.Find("p").Each(func(i int, s *goquery.Selection) {
+		text := strings.TrimSpace(s.Text())
+		if text != "" {
+			paragraphs = append(paragraphs, text)
+		}
+	})
+
+	rawText := strings.Join(paragraphs, "\n")
 	cleanText := cleanForLLM(rawText)
 
 	tokens := len(strings.Fields(cleanText)) // estimation simple
